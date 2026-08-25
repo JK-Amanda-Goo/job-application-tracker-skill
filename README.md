@@ -53,6 +53,23 @@ Then just ask, in a Claude Code session with Gmail and Google Sheets/Drive acces
 - `assets/approval-preview-template.html` — working HTML/CSS/JS scaffold for the approval preview (search, status filters, collapsible groups, light/dark theme).
 - `scripts/build_preview.py` — converts a consolidated CSV into the preview HTML.
 
+## Releasing
+
+Every notable change gets a `CHANGELOG.md` entry (Keep a Changelog format), a matching git tag, and a GitHub Release whose notes are that changelog section copy-pasted:
+
+```bash
+# 1. Add a new version section to the top of CHANGELOG.md
+# 2. git add -A && git commit -m "..."
+git tag -a vX.Y.Z -m "vX.Y.Z - <one-line summary>"
+git push origin main --tags
+gh release create vX.Y.Z --title "vX.Y.Z" --notes "$(cat <<'EOF'
+<paste the CHANGELOG.md section for this version>
+EOF
+)"
+```
+
+See `CHANGELOG.md` and the repo's [Releases page](../../releases) for the full history.
+
 ## License
 
 MIT — see `LICENSE`.
