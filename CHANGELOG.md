@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.7.0] - 2026-08-24
+
+### Added
+- Nine more keywords to the Step 3 query net: `take-home`, `assessment`, `assignment`, `case study`, `screen`, `screening`, `shortlist`, `move forward`, `advance to`, `next round`.
+
+### Fixed
+- `take-home` — a category the skill's own frontmatter and INCLUDE criteria named as in-scope since v0.1.0 — was never actually in the query keyword list, so a take-home email that didn't also say "interview" or "next steps" would never have reached the judgment step at all. Documented in SKILL.md that the INCLUDE criteria and the query keyword list are separate layers that must be updated together whenever a new event category is added, since drift between them is itself a silent-miss source distinct from the "company used unexpected wording" kind.
+
 ## [0.6.0] - 2026-08-24
 
 ### Added

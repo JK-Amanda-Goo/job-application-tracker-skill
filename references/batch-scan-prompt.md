@@ -51,7 +51,7 @@ In your final chat reply, do NOT repeat the full list — report only: total eve
 
 Combine, with OR:
 - Sender-domain matches for common ATS/job platforms relevant to the user's market (e.g. Greenhouse, Lever, Workday, iCIMS, Ashby, SmartRecruiters, Jobvite, Breezy, Taleo, Workable — extend with local/regional platforms if the user's job search isn't US-centric)
-- Subject-keyword matches in the primary correspondence language (English example: application, interview, position, role, offer, "next steps", recruiter, recruiting, hiring, candidacy, "thank you for applying", "talent manager", "talent acquisition", "talent team")
+- Subject-keyword matches in the primary correspondence language (English example: application, interview, position, role, offer, "next steps", recruiter, recruiting, hiring, candidacy, "thank you for applying", "talent manager", "talent acquisition", "talent team", "take-home", assessment, assignment, "case study", screen, screening, shortlist, "move forward", "advance to", "next round")
 - **If the user's correspondence includes another language, add that language's equivalent keywords and any locally-relevant ATS/recruiting platforms as additional OR terms, or run a fully separate supplementary query in that language across the same window.** Don't assume the English net catches translated equivalents — it won't, because it's matching literal substrings, not concepts.
 
 Scope the date window with the mail provider's date-range operators (inclusive start, exclusive-or-explicit end) rather than a relative "last N months" filter, so batches don't overlap or leave gaps.
