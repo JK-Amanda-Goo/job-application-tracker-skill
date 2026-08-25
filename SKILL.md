@@ -109,6 +109,8 @@ Otherwise, using browser automation against the live Sheets UI:
 
 Tell the user what was actually written vs. what (if anything) was skipped or failed, and remind them a re-scan next time will use the short regular-run lookback rather than rescanning everything.
 
+**On a regular re-run, walk through `references/weekly-rerun-checklist.md` before and after writing** — it encodes the specific bugs this skill already hit in production (Drive-read truncation causing duplicate rows, sort-order drift, keyword-net gaps) as concrete checks, not just prose warnings elsewhere in this doc. Don't treat it as optional boilerplate; every item on it is there because skipping it once already caused a real data-integrity bug on a live sheet.
+
 ## Explicit scope boundaries (by design, not gaps)
 
 - No scheduled/standing automation — every run is user-triggered in-session.

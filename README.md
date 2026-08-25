@@ -49,6 +49,7 @@ Then just ask, in a Claude Code session with Gmail and Google Sheets/Drive acces
 - `SKILL.md` — the skill itself.
 - `references/batch-scan-prompt.md` — the subagent prompt template for the scanning step.
 - `references/consolidation-prompt.md` — the subagent prompt template for the consolidation step.
+- `references/weekly-rerun-checklist.md` — a checklist to run through on every regular re-run, encoding real bugs this skill already hit in production (Drive-read truncation, sort-order drift, keyword-net gaps) as concrete checks.
 - `assets/approval-preview-template.html` — working HTML/CSS/JS scaffold for the approval preview (search, status filters, collapsible groups, light/dark theme).
 - `scripts/build_preview.py` — converts a consolidated CSV into the preview HTML.
 
