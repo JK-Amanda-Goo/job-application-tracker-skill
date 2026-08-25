@@ -95,15 +95,14 @@ Otherwise, using browser automation against the live Sheets UI:
 - **Partial-failure policy**: apply rows sequentially; if one fails, stop immediately rather than continuing past it, and report exactly what succeeded vs. what didn't. Write the Processed Message IDs for a row immediately after that row succeeds, not batched at the end — that way a resumed/retried run doesn't reprocess and duplicate anything that already landed.
 - Given the number of individual browser actions this implies at real scale, warn the user up front if a write is going to be large, and consider chunking the write into checkpointed batches so a long run is resumable rather than all-or-nothing.
 
-**Row order = priority, not insertion order or Applied Date.** After writing, the sheet should surface the applications the user actually needs to think about, not whatever's most recently touched. Sort key, in order:
+**Row order = most recently touched first, not insertion order.** After writing, the sheet should surface whatever the user just heard about first. Sort key, in order:
 
-1. **Openness tier** (ascending — open first): classify Current Status into a small ordinal tier, e.g. offer-stage > actively progressing (a next step is scheduled) > pending (awaiting a result after a submitted application or interview) > closed (rejected / withdrawn / role filled / abandoned). Do **not** use Applied Date as the primary key — a fresh rejection from yesterday is less relevant to the user than an offer thread from three months ago, and date-sorting buries the latter under noise.
-2. **Depth of progress within a tier** (descending) — e.g. number of interview rounds completed — so that among equally-open rows, the furthest-along ones surface first.
-3. **Applied Date** (descending) as the final tiebreaker only.
+1. **Last Updated** (descending) — the date of the row's most recent event, whatever it was (a new application, a rejection, an interview, anything). This is the primary key.
+2. **Applied Date** (descending) as the tiebreaker for rows that share the same Last Updated date.
 
-This is a default heuristic, not a claim of perfect prioritization — tell the user they may still want to hand-reorder a few rows they're personally watching closely, and that's expected, not a sign the sort is broken.
+(An earlier version of this skill used an openness-tier + interview-depth heuristic instead — offer > actively progressing > pending > closed, prioritizing open applications over recency. Amanda replaced that with the simpler Last-Updated-first rule on 2026-08-24 because she wants to see what just changed, not a computed priority ranking. If you're adapting this skill for a different user, ask which they'd prefer rather than assuming.)
 
-**Efficient re-sort technique**: don't retype every row to reorder a sheet that already has data (this matters most on a regular re-run, not the first bulk write). Compute the new rank for each existing row externally (a script reading the sheet's current row order), write those ranks into a scratch column immediately to the right of the real data, then use the Sheets UI's Data > Sort range with the active cell inside that scratch column (so the quick per-column sort option targets it directly) to physically reorder all rows in one operation, and delete the scratch column afterward. This avoids re-writing every field of every row through slow browser automation just to change row order.
+**Re-sort technique**: don't retype every row to reorder a sheet that already has data. Use the Sheets UI's Data > Sort range (advanced) on the full data range (header row included, "Data has header row" checked), with two sort columns: Last Updated descending, then Applied Date descending. This sorts the whole sheet in one operation using the columns that are already there — no scratch column needed, since both keys are plain date columns already in the schema (the openness-tier heuristic this replaced needed a computed scratch-column rank because "tier" and "depth" weren't real columns; a straightforward two-key date sort doesn't).
 
 ## Step 7 — After writing
 
