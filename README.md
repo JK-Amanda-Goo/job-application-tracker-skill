@@ -18,6 +18,8 @@ This isn't a toy version of the idea. It's the result of actually running this w
 5. **Approve** — you review it and give a batch-level go/no-go. Nothing is written before this.
 6. **Write** — applies approved changes to the sheet, sequentially, with a partial-failure policy (stop and report on the first mismatch rather than silently pressing on) so a large write is safe to resume.
 
+**Optional add-on**: if a meaningful share of your opportunities come through third-party recruiters, the skill can build a second tab tracking headhunters/agencies (who, what firm, what they've introduced you to) — see SKILL.md's "Optional add-on: Headhunter tracking" section for the classification rule (third-party vs. in-house recruiter) and the warm-start-then-scan approach.
+
 ## Install
 
 Copy this repo into your skills directory (path depends on your Claude Code setup, commonly `~/.claude/skills/`):

@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.8.0] - 2026-08-25
+
+### Added
+- New optional add-on: headhunter tracking as a second spreadsheet tab, keyed by headhunter rather than (company, position). Documents the third-party-vs-in-house classification rule (domain comparison, with guidance for the domain-matches-a-tracked-company-name edge case), a two-phase gathering approach (a narrow `QUERY`-based warm start from the existing tracker tab, followed by a dedicated date-windowed Gmail scan), the row schema (including a new `Notes` column), and three judgment calls that always need a human decision: suspected spam/bot outreach (keep + flag, don't silently drop), true category exclusions (e.g. an automated in-house "Virtual Recruiter" bot) versus quality exclusions (kept distinct on purpose), and irrelevant-role outreach (still counts as a real contact, include it).
+
 ## [0.7.0] - 2026-08-24
 
 ### Added
