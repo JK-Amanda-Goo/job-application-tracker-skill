@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.8.1] - 2026-08-25
+
+### Fixed
+- The headhunter-tracking schema documented in v0.8.0 was wrong: it said to list multiple introduced opportunities semicolon-separated in one cell on a single headhunter row. The actual agreed design (confirmed with the user after she caught the mismatch on a live sheet where one headhunter had introduced 10 companies) is one row per (headhunter, company, position) — a headhunter with 10 opportunities gets 10 rows, each with its own First/Last Contact and Processed Message IDs computed from that specific opportunity's events, not copied from the headhunter's aggregate.
+
 ## [0.8.0] - 2026-08-25
 
 ### Added
