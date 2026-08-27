@@ -96,6 +96,8 @@ Otherwise, using browser automation against the live Sheets UI:
 - **Before writing each row**, re-read that row's company/position to confirm it still matches what the diff expected. The diff was computed from a snapshot; the sheet may have shifted since (a manual edit, or an earlier row insertion in this same batch pushing things down). If it doesn't match, skip that row and record it as a failure rather than overwriting the wrong data.
 - **Partial-failure policy**: apply rows sequentially; if one fails, stop immediately rather than continuing past it, and report exactly what succeeded vs. what didn't. Write the Processed Message IDs for a row immediately after that row succeeds, not batched at the end — that way a resumed/retried run doesn't reprocess and duplicate anything that already landed.
 - Given the number of individual browser actions this implies at real scale, warn the user up front if a write is going to be large, and consider chunking the write into checkpointed batches so a long run is resumable rather than all-or-nothing.
+- **Before typing a row with Tab-separated cell entry, confirm the starting cell is a genuine single-cell selection** (Name Box shows something like `A2`, not a full-column reference like `A:A`). Clicking a column *header* rather than a cell inside it selects the whole column, and in that state Tab moves the active cell **down** within the column instead of **right** to the next column — every value you type lands stacked in column A instead of spread across the row. Caught this after it silently wrote 9 header values into A1:A9 instead of across row 1.
+- **If browser clicks/keystrokes stop registering while screenshots and page-text reads keep working normally**, that's a real, reproducible extension-level stall, not something to keep retrying coordinates against. It's recurred across sessions and the only reliable fix found so far is a full browser quit-and-reopen (new tabs or page reloads alone did not clear it) — stop and ask the user to restart the browser rather than burning many retries on slightly different click coordinates.
 
 **Row order = most recently touched first, not insertion order.** After writing, the sheet should surface whatever the user just heard about first. Sort key, in order:
 
@@ -141,5 +143,6 @@ Some users get a meaningful share of opportunities through third-party recruiter
 
 - `references/batch-scan-prompt.md` — full subagent prompt template for Step 3, including inclusion/exclusion criteria for what counts as a real candidate event.
 - `references/consolidation-prompt.md` — full subagent prompt template for Step 4.
+- `references/weekly-rerun-checklist.md` — checklist to run through on every regular re-run (Step 7), encoding real production bugs (Drive-read truncation, sort-order drift, keyword-net gaps) as concrete checks.
 - `assets/approval-preview-template.html` — working HTML/CSS/JS scaffold for Step 5 (search, filter by status, collapsible company groups, expandable rows, light/dark theme).
 - `scripts/build_preview.py` — script that converts a consolidated CSV into the JSON the template above consumes, and splices it in.

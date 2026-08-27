@@ -2,6 +2,14 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.8.2] - 2026-08-26
+
+### Fixed
+- `references/weekly-rerun-checklist.md` was linked from Step 7 and the README but missing from SKILL.md's own "Reference files" list — added.
+
+### Added
+- Step 6 now documents two browser-automation gotchas hit repeatedly in production: (1) starting a Tab-separated row entry from a full-column selection (e.g. from clicking a column header) makes Tab move down within that column instead of across it, silently stacking values into one column; (2) if clicks/keystrokes stop registering while screenshots and page-text reads keep working, that's a recurring extension-level stall best fixed by a full browser restart, not more retries.
+
 ## [0.8.1] - 2026-08-25
 
 ### Fixed
