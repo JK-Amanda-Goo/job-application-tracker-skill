@@ -2,6 +2,12 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.9.0] - 2026-08-26
+
+### Added
+- Headhunter-tracking schema gains a `Current Result` column (`Ongoing` / `Closed` / `No update`) tracking where each introduced opportunity actually stands — cross-referenced against the main tracker tab first, falling back to a direct Gmail search when the company never shows up there. Documents the soft-close pattern some platforms use ("thank you for your interest... we appreciate the time you spent" reads as neutral but is a rejection), the recency-based judgment call between `Ongoing` and `No update` for a thread that's gone quiet, and applying one resolved outcome across every headhunter row referencing the same company.
+- Step 6 documents two more browser-automation lessons: the "clicks stop registering" stall traced to host-machine memory pressure from many open tabs/apps (a browser restart alone only helps temporarily if that's still the cause — closing other tabs/apps is the actual fix), and using the `find` tool (natural-language element lookup + ref-based clicking) instead of pixel coordinates when window/toolbar layout keeps shifting between screenshots.
+
 ## [0.8.2] - 2026-08-26
 
 ### Fixed
