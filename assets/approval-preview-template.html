@@ -385,15 +385,28 @@
     pending: {label:"Pending", color:"var(--pending)", bg:"var(--pending-bg)"}
   };
 
-  function classify(status){
+  var STALE_DAYS = 30; // no news for this long, with no explicit next step, reads as closed rather than still-live
+
+  function classify(status, updated){
     var s = (status || "").toLowerCase();
     if (/offer/.test(s)) return "offer";
     if (/reject|declin|not mov|no longer|not select|not an ideal fit|not progres|closed|filled|not proceed|considering other|position filled|role closed|role filled/.test(s)) return "closed";
     if (/interview|recruiter|screen|chat|assessment|call|take-home|case study|next step|confirmed|reminder|schedul/.test(s)) return "active";
+    // Nothing in the status text itself says rejected/active/offer — this is the
+    // fallback bucket. Don't leave it "pending" forever just because no closing
+    // email ever arrived: a thread silent for a month or more is realistically
+    // closed (ghosted), not still open. Only the classification here changes —
+    // the sheet's own Current Status text still records the real latest event
+    // verbatim, per SKILL.md Step 4's anti-regression rule.
+    var updatedDate = updated ? new Date(updated) : null;
+    if (updatedDate && !isNaN(updatedDate.getTime())) {
+      var daysSince = (Date.now() - updatedDate.getTime()) / 86400000;
+      if (daysSince >= STALE_DAYS) return "closed";
+    }
     return "pending";
   }
 
-  DATA.forEach(function(r){ r._cat = classify(r.status); });
+  DATA.forEach(function(r){ r._cat = classify(r.status, r.updated); });
 
   var totalCompanies = new Set(DATA.map(function(r){return r.company;})).size;
   var counts = {closed:0, offer:0, active:0, pending:0};

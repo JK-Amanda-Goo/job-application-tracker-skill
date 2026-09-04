@@ -2,6 +2,11 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.9.1] - 2026-09-04
+
+### Changed
+- The approval preview's status-pill classification no longer buckets a row as `pending` forever just because no explicit rejection ever arrived. A row whose Current Status doesn't read as rejected/active/offer, and whose Last Updated is 30+ days old, now classifies as `closed` instead — a thread gone silent for a month is realistically ghosted, not still live. Scoped entirely to `classify()` in `assets/approval-preview-template.html`; the sheet's actual Current Status cell still always records the literal latest event per Step 4's anti-regression rule — only the preview's own derived bucket changes.
+
 ## [0.9.0] - 2026-08-26
 
 ### Added
